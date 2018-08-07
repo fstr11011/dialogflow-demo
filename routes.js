@@ -26,7 +26,7 @@ var authOptions = {
 
 router.get("/", function(req, res, next){
     UserInfo.find({})
-            .sort({accountNumber: 1})
+            .sort({employeeNumber: 1})
             .exec(function(err, info){
                 if(err) return next(err);
                 res.json(info);
@@ -34,20 +34,19 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
-    if(req.body.queryResult.action === "userinfopls"){
-            UserInfo.findOne({accountNumber: req.body.queryResult.parameters.accountNumber})
+    if(req.body.action === "employeeLookUp"){
+            UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){
-                        res.json(
-                            
-                        );
+                        res.json({
+                            name: info.name
+                        });
                     } else {
                         res.json({
-
+                            text: "did not work"
                         });
                     }
-                    
             });
     }
 
