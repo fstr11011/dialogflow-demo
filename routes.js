@@ -37,7 +37,7 @@ router.post("/", function(req, res, next){
     console.log(req.body.action);
     console.log(req.body.parameters.accountNumber);
     if(req.body.action === "employeeLookUp"){
-            UserInfo.findOne({employeeNumber: req.body.parameters.accountNumber})
+            UserInfo.findOne({accountNumber: req.body.parameters.accountNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){

@@ -3,6 +3,7 @@
 var express = require("express");
 var app = express();
 var routes = require("./routes");
+var UserInfo = require("./models").UserInfo;
 
 var bodyParser = require("body-parser").json;
 var logger = require("morgan");
