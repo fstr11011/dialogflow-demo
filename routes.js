@@ -34,8 +34,6 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
-    console.log(req.body.action);
-    console.log(req.body.parameters.accountNumber);
     if(req.body.action === "employeeLookUp"){
             UserInfo.findOne({accountNumber: req.body.parameters.accountNumber})
                 .exec(function(err, info){
@@ -46,13 +44,29 @@ router.post("/", function(req, res, next){
                         });
                     } else {
                         res.json({
-                            text: "did not work"
+                            text: "Account does not exist."
                         });
                     }
             });
     }
 
-    if(req.body.queryResult.action === "addQueue"){
+    if(req.body.action === "checkVerbalCode"){
+        UserInfo.findOne({accountNumber: req.body.parameters.accountNumber})
+            .exec(function(err, info){
+                if(err) return next(err);
+                if(req.body.parameters.verbalCode === info.verbalCode){
+                    res.json({
+                        name: info.address
+                    });
+                } else {
+                    res.json({
+                        text: "Verbal code is incorrect"
+                    });
+                }
+        });
+}
+
+    if(req.body.action === "addQueue"){
     
         var address = req.body.queryResult.outputContexts[1].parameters.name;
         var accountNumber = req.body.queryResult.outputContexts[1].parameters.accountNumber;
@@ -88,14 +102,14 @@ router.post("/", function(req, res, next){
             request(queueOptions, function(err, response, body){
                 if(err){
                     console.error('error parsing json: ', err);
-                    //res.sendStatus(500);
+                    res.sendStatus(500);
                     throw err;
                 } else{
                     console.log("Operation succesfully completed");
                     res.json({
                         
                     });
-                    //res.sendStatus(201);
+                    res.sendStatus(201);
                 }
             });
         });
