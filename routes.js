@@ -68,8 +68,8 @@ router.post("/", function(req, res, next){
 
     if(req.body.action === "addQueue"){
     
-        var address = req.body.queryResult.outputContexts[1].parameters.name;
-        var accountNumber = req.body.queryResult.outputContexts[1].parameters.accountNumber;
+        var addressChange = req.body.parameters.address;
+        var accountNumber = req.body.parameters.accountNumber;
 
         request(authOptions, function(err, response, body){
             if(err){
@@ -82,11 +82,11 @@ router.post("/", function(req, res, next){
             var postDataQueue = {
                 itemData: {
                     Priority: "Normal",
-                    Reference: name,
+                    Reference: accountNumber,
                     Name: "ApiQueue",
                     SpecificContent: {
                         accountNumber: accountNumber,
-                        address: address
+                        address: addressChange
                     }
                 }
             };
@@ -107,7 +107,7 @@ router.post("/", function(req, res, next){
                 } else{
                     console.log("Operation succesfully completed");
                     res.json({
-                        
+                        text: "Your change of address is being processed."
                     });
                     res.sendStatus(201);
                 }
