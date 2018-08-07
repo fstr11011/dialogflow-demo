@@ -26,7 +26,7 @@ var authOptions = {
 
 router.get("/", function(req, res, next){
     UserInfo.find({})
-            .sort({employeeNumber: 1})
+            .sort({accountNumber: 1})
             .exec(function(err, info){
                 if(err) return next(err);
                 res.json(info);
@@ -34,8 +34,10 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
+    console.log(req.body.action);
+    console.log(req.body.parameters.accountNumber);
     if(req.body.action === "employeeLookUp"){
-            UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
+            UserInfo.findOne({employeeNumber: req.body.parameters.accountNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){
@@ -86,14 +88,14 @@ router.post("/", function(req, res, next){
             request(queueOptions, function(err, response, body){
                 if(err){
                     console.error('error parsing json: ', err);
-                    res.sendStatus(500);
+                    //res.sendStatus(500);
                     throw err;
                 } else{
                     console.log("Operation succesfully completed");
                     res.json({
                         
                     });
-                    res.sendStatus(201);
+                    //res.sendStatus(201);
                 }
             });
         });
