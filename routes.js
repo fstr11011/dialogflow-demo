@@ -70,19 +70,21 @@ router.post("/", function(req, res, next){
     
         var addressChange = req.body.parameters.address;
         var accountNumber = req.body.parameters.accountNumber;
+        console.log(addressChange);
+        console.log(accountNumber);
 
         request(authOptions, function(err, response, body){
             if(err){
                 console.error('error posting json: ', err);
                 throw err;
             }
-
+            console.log(JSON.stringify(body));
             var queueURL = config.queueUrl;
             
             var postDataQueue = {
                 itemData: {
                     Priority: "Normal",
-                    Reference: accountNumber,
+                    Reference: addressChange,
                     Name: "ApiQueue",
                     SpecificContent: {
                         accountNumber: accountNumber,
@@ -102,14 +104,14 @@ router.post("/", function(req, res, next){
             request(queueOptions, function(err, response, body){
                 if(err){
                     console.error('error parsing json: ', err);
-                    res.sendStatus(500);
                     throw err;
+                    res.sendStatus(500);
                 } else{
+                    console.log(JSON.stringify(body));
                     console.log("Operation succesfully completed");
                     res.json({
                         text: "Your change of address is being processed."
                     });
-                    res.sendStatus(201);
                 }
             });
         });
