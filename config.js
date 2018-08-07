@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    dbUrl:  "mongodb://mtg:mtg123@ds113942.mlab.com:13942/dialogflow-api",
+    dbUrl: "mongodb://mtg:mtg321@ds215172.mlab.com:15172/dialogflow-demo",
     tenancyName: "Roboyo_MGladstein",
     usernameOrEmailAddress: "admin",
     password: "Mg200120798",
