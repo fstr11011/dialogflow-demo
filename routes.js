@@ -41,15 +41,43 @@ router.post("/", function(req, res, next){
                     if(err) return next(err);
                     if(info){
                         res.json({
-                            name: info.name
+                            "fulfillmenttext": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?"
                         });
                     } else {
                         res.json({
-                            text: "Account does not exist."
+                            "fulfillmentText": "No account was found for: " + req.body.parameters.employeeNumber + ".",
+                            "followupEventInput": {
+                                "name": "employee_not_found",
+                                "languageCode": "en-US",
+                            }
                         });
                     }
             });
     }
+
+    if(req.body.action === "employeeLookUp2"){
+        UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
+            .exec(function(err, info){
+                if(err) return next(err);
+                if(info){
+                    res.json({
+                        "fulfillmenttext": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?",
+                        "followupEventInput": {
+                            "name": "verbal_code",
+                            "languageCode": "en-US",
+                        }
+                    });
+                } else {
+                    res.json({
+                        "fulfillmentText": "No account was found for: " + req.body.parameters.employeeNumber + ".",
+                        "followupEventInput": {
+                            "name": "employee_not_found",
+                            "languageCode": "en-US",
+                        }
+                    });
+                }
+        });
+}
 
     //checks if the given verbal code matches the one in the DB
     if(req.body.action === "checkVerbalCode"){
