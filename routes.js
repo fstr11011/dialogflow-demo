@@ -34,6 +34,7 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
+    //looks for employee in DB based on employee ID
     if(req.body.action === "employeeLookUp"){
             UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
                 .exec(function(err, info){
@@ -50,6 +51,7 @@ router.post("/", function(req, res, next){
             });
     }
 
+    //checks if the given verbal code matches the one in the DB
     if(req.body.action === "checkVerbalCode"){
         UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
             .exec(function(err, info){
@@ -64,8 +66,9 @@ router.post("/", function(req, res, next){
                     });
                 }
         });
-}
+    }
 
+    //adds change to UiOrchestrator queue
     if(req.body.action === "addQueue"){
     
         var addressChange = req.body.parameters.address;
@@ -118,6 +121,7 @@ router.post("/", function(req, res, next){
     }
 });
 
+//used for adding new employees to DB with postman
 router.post("/newuser", function(req, res, next){
     var user = new UserInfo(req.body);
     user.save(function(err, user){
