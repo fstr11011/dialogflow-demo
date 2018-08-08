@@ -48,7 +48,10 @@ router.post("/", function(req, res, next){
                         res.json({
                             "followupEventInput": {
                                 "name": "employee_ID",
-                                "languageCode": "en-US"
+                                "languageCode": "en-US",
+                                "parameters": {
+                                    "param": req.body.queryResult.parameters.employeeNumber
+                                  }
                             }
                         });
                     }
