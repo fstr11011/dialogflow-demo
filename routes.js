@@ -46,12 +46,12 @@ router.post("/", function(req, res, next){
                             "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?"
                         });
                     } else {
-                        //res.json({
-                        //    "followupEventInput": {
-                        //        "name": "not_rec",
-                        //        "languageCode": "en-US"
-                        //    }
-                        //});
+                        res.json({
+                            "followupEventInput": {
+                                "name": "not_rec",
+                                "languageCode": "en-US"
+                            }
+                        });
                     }
             });
     }
