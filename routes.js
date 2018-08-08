@@ -42,7 +42,7 @@ router.post("/", function(req, res, next){
                     if(err) return next(err);
                     if(info){
                         res.json({
-                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?"
+                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?"
                         });
                     } else {
                         res.json({
