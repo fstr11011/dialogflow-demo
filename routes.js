@@ -65,6 +65,9 @@ router.post("/", function(req, res, next){
                         "followupEventInput": {
                             "name": "verbal_code",
                             "languageCode": "en-US",
+                            "parameters": {
+                                "name": info.name
+                            }
                         }
                     });
                 } else {
