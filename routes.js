@@ -43,7 +43,8 @@ router.post("/", function(req, res, next){
                     if(err) return next(err);
                     if(info){
                         res.json({
-                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?"
+                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?",
+                            "allRequiredParamsPresent": true,
                         });
                     } else {
                         res.json({
@@ -58,7 +59,7 @@ router.post("/", function(req, res, next){
 
     //checks if the given verbal code matches the one in the DB
     if(req.body.queryResult.action === "checkPIN"){
-        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber})
+        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber["number-integer"]})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.queryResult.parameters.number === info.PIN){
