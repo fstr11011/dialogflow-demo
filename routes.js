@@ -57,37 +57,36 @@ router.post("/", function(req, res, next){
 
     if(req.body.queryResult.action === "employeeLookUp2"){
         var sessionID = uuidv1();
-        if(req.body.queryResult.parameters.employeeNumber != ""){
-           UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
-            .exec(function(err, info){
-                if(err) return next(err);
-                if(info){
-                    res.json({
-                        "outputContexts": [
-                            {
-                              "name": "projects/dialogflow-demo-ca39a/agent/sessions/" + sessionID + "/contexts/employeeIdNotFound-followup",
-                              "lifespanCount": 2,
-                              "parameters": {
-                                "name": info.name
-                              }
+        
+        UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
+        .exec(function(err, info){
+            if(err) return next(err);
+            if(info){
+                res.json({
+                    "outputContexts": [
+                        {
+                            "name": "projects/dialogflow-demo-ca39a/agent/sessions/" + sessionID + "/contexts/employeeIdNotFound-followup",
+                            "lifespanCount": 2,
+                            "parameters": {
+                            "name": info.name
                             }
-                        ],
-                        "followupEventInput": {
-                            "name": "verbal_code",
-                            "languageCode": "en-US"
                         }
-                    });
-                } else {
-                    res.json({
-                        //"fulfillmentText": "No account was found for: " + req.body.queryResult.parameters.employeeNumber + ".",
-                        "followupEventInput": {
-                            "name": "employee_not_found",
-                            "languageCode": "en-US",
-                        }
-                    });
-                }
-        }); 
-        }
+                    ],
+                    "followupEventInput": {
+                        "name": "verbal_code",
+                        "languageCode": "en-US"
+                    }
+                });
+            } else {
+                res.json({
+                    //"fulfillmentText": "No account was found for: " + req.body.queryResult.parameters.employeeNumber + ".",
+                    "followupEventInput": {
+                        "name": "employee_not_found",
+                        "languageCode": "en-US",
+                    }
+                });
+            }
+    }); 
         
 }
 
