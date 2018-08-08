@@ -45,12 +45,12 @@ router.post("/", function(req, res, next){
                             "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?"
                         });
                     } else {
-                        res.json({
-                            "followupEventInput": {
-                                "name": "not_rec",
-                                "languageCode": "en-US"
-                            }
-                        });
+                        //res.json({
+                        //    "followupEventInput": {
+                        //        "name": "not_rec",
+                        //        "languageCode": "en-US"
+                        //    }
+                        //});
                     }
             });
     }
@@ -65,12 +65,12 @@ router.post("/", function(req, res, next){
                         "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
                 } else {
-                    res.json({
-                        "followupEventInput": {
-                            "name": "wrong_pin",
-                            "languageCode": "en-US"
-                        }
-                    });
+                    //res.json({
+                    //    "followupEventInput": {
+                    //        "name": "wrong_pin",
+                    //        "languageCode": "en-US"
+                    //    }
+                    //});
                 }
         });
     }
