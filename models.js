@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var UserInfoSchema = new Schema({
-    accountNumber: Number,
+    employeeNumber: Number,
     name: String,
     verbalCode: String,
     address: String

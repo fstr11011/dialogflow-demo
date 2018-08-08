@@ -26,7 +26,7 @@ var authOptions = {
 
 router.get("/", function(req, res, next){
     UserInfo.find({})
-            .sort({accountNumber: 1})
+            .sort({employeeNumber: 1})
             .exec(function(err, info){
                 if(err) return next(err);
                 res.json(info);
@@ -35,7 +35,7 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
     if(req.body.action === "employeeLookUp"){
-            UserInfo.findOne({accountNumber: req.body.parameters.accountNumber})
+            UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){
@@ -51,7 +51,7 @@ router.post("/", function(req, res, next){
     }
 
     if(req.body.action === "checkVerbalCode"){
-        UserInfo.findOne({accountNumber: req.body.parameters.accountNumber})
+        UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.parameters.verbalCode === info.verbalCode){
@@ -69,9 +69,9 @@ router.post("/", function(req, res, next){
     if(req.body.action === "addQueue"){
     
         var addressChange = req.body.parameters.address;
-        var accountNumber = req.body.parameters.accountNumber;
+        var employeeNumber = req.body.parameters.employeeNumber;
         console.log(addressChange);
-        console.log(accountNumber);
+        console.log(employeeNumber);
 
         request(authOptions, function(err, response, body){
             if(err){
@@ -87,7 +87,7 @@ router.post("/", function(req, res, next){
                     Reference: addressChange,
                     Name: "ApiQueue",
                     SpecificContent: {
-                        accountNumber: accountNumber,
+                        employeeNumber: employeeNumber,
                         address: addressChange
                     }
                 }
