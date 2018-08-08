@@ -57,7 +57,7 @@ router.post("/", function(req, res, next){
 
     if(req.body.queryResult.action === "employeeLookUp2"){
         var sessionID = uuidv1();
-        if(req.body.queryResult.parameters.employeeNumber !== ""){
+        if(req.body.queryResult.parameters.employeeNumber != ""){
            UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
