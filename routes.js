@@ -56,17 +56,20 @@ router.post("/", function(req, res, next){
     }
 
     //checks if the given verbal code matches the one in the DB
-    if(req.body.queryResult.action === "checkVerbalCode"){
-        UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
+    if(req.body.queryResult.action === "checkPIN"){
+        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[parameters].employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
-                if(req.body.parameters.verbalCode === info.verbalCode){
+                if(req.body.queryResult.parameters.number === info.PIN){
                     res.json({
-                        name: info.address
+                        "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
                 } else {
                     res.json({
-                        text: "Verbal code is incorrect"
+                        "followupEventInput": {
+                            "name": "wrong_pin",
+                            "languageCode": "en-US"
+                        }
                     });
                 }
         });
