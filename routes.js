@@ -57,7 +57,8 @@ router.post("/", function(req, res, next){
 
     if(req.body.queryResult.action === "employeeLookUp2"){
         var sessionID = uuidv1();
-        UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
+        if(req.body.queryResult.parameters.employeeNumber !== ""){
+           UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(info){
@@ -85,7 +86,9 @@ router.post("/", function(req, res, next){
                         }
                     });
                 }
-        });
+        }); 
+        }
+        
 }
 
     //checks if the given verbal code matches the one in the DB
