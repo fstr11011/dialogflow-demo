@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var UserInfoSchema = new Schema({
     employeeNumber: Number,
     name: String,
-    verbalCode: String,
+    PIN: Number,
     address: String
 });
 
