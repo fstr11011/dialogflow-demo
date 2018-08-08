@@ -38,21 +38,12 @@ router.post("/", function(req, res, next){
     var sessionID = uuidv1();
     //looks for employee in DB based on employee ID
     if(req.body.queryResult.action === "employeeLookUp"){
-            UserInfo.findOne({employeeNumber: req.body.queryResult.queryText})
+            UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){
                         res.json({
-                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?",
-                            "outputContexts": [
-                                {
-                                  "name": "projects/dialogflow-demo-ca39a/agent/sessions/" + sessionID + "/contexts/custom-followup-id",
-                                  "lifespanCount": 2,
-                                  "parameters": {
-                                    "employeeNumber": req.body.queryResult.queryText
-                                  }
-                                }
-                            ]
+                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?"
                         });
                     } else {
                         //res.json({
