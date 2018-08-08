@@ -47,7 +47,7 @@ router.post("/", function(req, res, next){
                     } else {
                         res.json({
                             "followupEventInput": {
-                                "name": "employee_ID",
+                                "name": "not_rec",
                                 "languageCode": "en-US"
                             }
                         });
