@@ -64,7 +64,10 @@ router.post("/", function(req, res, next){
                         "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?",
                         "followupEventInput": {
                             "name": "verbal_code",
-                            "languageCode": "en-US"
+                            "languageCode": "en-US",
+                            "parameters": {
+                                "name": info.name
+                            }
                         }
                     });
                 } else {
