@@ -70,10 +70,10 @@ router.post("/", function(req, res, next){
                 } else {
                     res.json({
                         "fulfillmentText": "No account was found for: " + req.body.queryResult.parameters.employeeNumber + ".",
-                        "followupEventInput": {
-                            "name": "employee_not_found",
-                            "languageCode": "en-US",
-                        }
+                        //"followupEventInput": {
+                        //    "name": "employee_not_found",
+                        //    "languageCode": "en-US",
+                        //}
                     });
                 }
         });
