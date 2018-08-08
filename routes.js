@@ -61,7 +61,7 @@ router.post("/", function(req, res, next){
                 if(err) return next(err);
                 if(info){
                     res.json({
-                        "fulfillmenttext": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?",
+                        "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your verbal passcode?",
                         //"followupEventInput": {
                         //    "name": "verbal_code",
                         //    "languageCode": "en-US",
