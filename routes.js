@@ -35,8 +35,8 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
     //looks for employee in DB based on employee ID
-    if(req.body.action === "employeeLookUp"){
-            UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
+    if(req.body.queryResult.action === "employeeLookUp"){
+            UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
                 .exec(function(err, info){
                     if(err) return next(err);
                     if(info){
@@ -55,8 +55,8 @@ router.post("/", function(req, res, next){
             });
     }
 
-    if(req.body.action === "employeeLookUp2"){
-        UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
+    if(req.body.queryResult.action === "employeeLookUp2"){
+        UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(info){
@@ -80,8 +80,8 @@ router.post("/", function(req, res, next){
 }
 
     //checks if the given verbal code matches the one in the DB
-    if(req.body.action === "checkVerbalCode"){
-        UserInfo.findOne({employeeNumber: req.body.parameters.employeeNumber})
+    if(req.body.queryResult.action === "checkVerbalCode"){
+        UserInfo.findOne({employeeNumber: req.body.queryResult.parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.parameters.verbalCode === info.verbalCode){
@@ -97,10 +97,10 @@ router.post("/", function(req, res, next){
     }
 
     //adds change to UiOrchestrator queue
-    if(req.body.action === "addQueue"){
+    if(req.body.queryResult.action === "addQueue"){
     
-        var addressChange = req.body.parameters.address;
-        var employeeNumber = req.body.parameters.employeeNumber;
+        var addressChange = req.body.queryResult.actionparameters.address;
+        var employeeNumber = req.body.queryResult.parameters.employeeNumber;
         console.log(addressChange);
         console.log(employeeNumber);
 
