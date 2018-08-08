@@ -57,7 +57,7 @@ router.post("/", function(req, res, next){
 
     //checks if the given verbal code matches the one in the DB
     if(req.body.queryResult.action === "checkPIN"){
-        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber})
+        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters["employeeNumber.original"]})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.queryResult.parameters.number === info.PIN){
