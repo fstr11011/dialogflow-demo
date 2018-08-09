@@ -63,11 +63,11 @@ router.post("/", function(req, res, next){
     }
 
     //checks if the given verbal code matches the one in the DB
-    if(req.body.queryResult.action === "checkPIN"){
-        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber["number-integer"]})
+    if(req.body.queryResult.action === "checkPIN" && req.body.queryResult.parameters.pin !== ""){
+        UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
-                if(req.body.queryResult.parameters.number === info.PIN){
+                if(req.body.queryResult.parameters.pin === info.PIN){
                     res.json({
                         "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
