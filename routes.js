@@ -95,6 +95,7 @@ router.post("/", function(req, res, next){
                 throw err;
             }
             console.log(JSON.stringify(body));
+
             var queueURL = config.queueUrl;
             
             var postDataQueue = {
@@ -117,6 +118,25 @@ router.post("/", function(req, res, next){
                 url: queueURL
             };
 
+            var jobURL = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
+
+            var jobData = {
+                startInfo: {
+                    ReleaseKey: "99a5bd71-f13b-46f4-9e2c-2b319d60c7a9",
+                    Strategy: "All",
+                    RobotIds: [],
+                    NoOfRobots: 0
+                }
+            };
+
+            var jobOptions = {
+                method: "post",
+                body: jobData,
+                auth: { bearer: body.result},
+                json: true,
+                url: jobURL
+            };
+
             request(queueOptions, function(err, response, body){
                 if(err){
                     console.error('error parsing json: ', err);
@@ -128,6 +148,15 @@ router.post("/", function(req, res, next){
                     res.json({
                         "fulfillmentText": "Thank you! Your request is being processed and you should receive a confirmation email in the next 5 minutes.  Enjoy the rest of your day!"
                     });
+                }
+            });
+
+            request(jobOptions, function (err, res, body) {
+                if (err) {
+                    console.error('error posting json: ', err);
+                    throw err
+                } else {
+                    console.log("Job succesfully started")
                 }
             });
         });
