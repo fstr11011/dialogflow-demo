@@ -52,12 +52,15 @@ router.post("/", function(req, res, next){
                               }
                         });
                     } else {
-                        //res.json({
-                        //    "followupEventInput": {
-                        //        "name": "not_rec",
-                        //        "languageCode": "en-US"
-                        //    }
-                        //});
+                        res.json({
+                            "followupEventInput": {
+                                "name": "bad_employee_number",
+                                "parameters": {
+                                    "employeeNumber": req.body.queryResult.parameters.employeeNumber
+                                },
+                                "languageCode": "en-US"
+                              }
+                        });
                     }
             });
     }
