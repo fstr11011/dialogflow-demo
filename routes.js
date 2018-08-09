@@ -36,7 +36,6 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
 
-    var employeeNumberForQueue;
     var sessionID = uuidv1();
     //looks for employee in DB based on employee ID
     if(req.body.queryResult.action === "employeeLookUp"){
@@ -70,7 +69,6 @@ router.post("/", function(req, res, next){
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.queryResult.parameters.pin === info.PIN){
-                    employeeNumberForQueue = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
                     res.json({
                         "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
@@ -89,7 +87,7 @@ router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "addQueue"){
     
         var addressChange = req.body.queryResult.parameters.newAddress;
-        var employeeNumber = employeeNumberForQueue;
+        var employeeNumber = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
 
         request(authOptions, function(err, response, body){
             if(err){
