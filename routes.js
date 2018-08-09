@@ -43,11 +43,13 @@ router.post("/", function(req, res, next){
                     if(err) return next(err);
                     if(info){
                         res.json({
-                            "fulfillmentText": "Thanks " + info.name + "! And to confirm your identity, can you please provide your PIN number?",
-                            "status": {
-                                "code": 200,
-                                "errorType": "success"
-                            }
+                            "followupEventInput": {
+                                "name": "custom_hello",
+                                "parameters": {
+                                    "name": info.name
+                                },
+                                "languageCode": "en-US"
+                              }
                         });
                     } else {
                         //res.json({
