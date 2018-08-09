@@ -132,6 +132,7 @@ router.post("/", function(req, res, next){
             });
         });
     }
+    
 });
 
 //used for adding new employees to DB with postman
