@@ -128,7 +128,7 @@ router.post("/", function(req, res, next){
                     console.log(JSON.stringify(body));
                     console.log("Operation succesfully completed");
                     res.json({
-                        text: "Your change of address is being processed."
+                        "fulfillmentText": "Thank you! Your request is being processed and you should receive a confirmation email in the next 5 minutes.  Enjoy the rest of your day!"
                     });
                 }
             });
