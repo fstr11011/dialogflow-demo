@@ -35,6 +35,8 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
+
+    var employeeNumberForQueue;
     var sessionID = uuidv1();
     //looks for employee in DB based on employee ID
     if(req.body.queryResult.action === "employeeLookUp"){
@@ -62,12 +64,13 @@ router.post("/", function(req, res, next){
             });
     }
 
-    //checks if the given verbal code matches the one in the DB
+    //checks if the given PIN number matches the one in the DB
     if(req.body.queryResult.action === "checkPIN" && req.body.queryResult.parameters.pin !== ""){
         UserInfo.findOne({employeeNumber: req.body.queryResult.outputContexts[0].parameters.employeeNumber})
             .exec(function(err, info){
                 if(err) return next(err);
                 if(req.body.queryResult.parameters.pin === info.PIN){
+                    employeeNumberForQueue = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
                     res.json({
                         "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
@@ -85,10 +88,8 @@ router.post("/", function(req, res, next){
     //adds change to UiOrchestrator queue
     if(req.body.queryResult.action === "addQueue"){
     
-        var addressChange = req.body.queryResult.actionparameters.address;
-        var employeeNumber = req.body.queryResult.parameters.employeeNumber;
-        console.log(addressChange);
-        console.log(employeeNumber);
+        var addressChange = req.body.queryResult.parameters.newAddress;
+        var employeeNumber = employeeNumberForQueue;
 
         request(authOptions, function(err, response, body){
             if(err){
