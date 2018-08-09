@@ -56,7 +56,7 @@ router.post("/", function(req, res, next){
                             "followupEventInput": {
                                 "name": "bad_employee_number",
                                 "languageCode": "en-US"
-                              }
+                            }
                         });
                     }
             });
@@ -72,12 +72,12 @@ router.post("/", function(req, res, next){
                         "fulfillmentText": "Thanks!  It looks like your current address is " + info.address + ".  Would you like to update this?"
                     });
                 } else {
-                    //res.json({
-                    //    "followupEventInput": {
-                    //        "name": "wrong_pin",
-                    //        "languageCode": "en-US"
-                    //    }
-                    //});
+                    res.json({
+                        "followupEventInput": {
+                            "name": "bad_pin",
+                            "languageCode": "en-US"
+                        }
+                    });
                 }
         });
     }
