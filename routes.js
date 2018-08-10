@@ -88,6 +88,15 @@ router.post("/", function(req, res, next){
     
         var addressChange = req.body.queryResult.parameters.newAddress;
         var employeeNumber = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
+        var originalAddress;
+
+        UserInfo.findOne({employeeNumber: employeeNumber})
+        .exec(function(err, info){
+            if(err) return err;
+            if(info){
+                originalAddress = info.address;
+            }
+        });
 
         request(authOptions, function(err, response, body){
             if(err){
@@ -105,7 +114,8 @@ router.post("/", function(req, res, next){
                     Name: "ApiQueue",
                     SpecificContent: {
                         employeeNumber: employeeNumber,
-                        address: addressChange
+                        address: addressChange,
+                        originalAddress: originalAddress
                     }
                 }
             };
