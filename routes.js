@@ -89,12 +89,14 @@ router.post("/", function(req, res, next){
         var addressChange = req.body.queryResult.parameters.newAddress;
         var employeeNumber = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
         var originalAddress;
+        var name;
 
         UserInfo.findOne({employeeNumber: employeeNumber})
         .exec(function(err, info){
             if(err) return err;
             if(info){
                 originalAddress = info.address;
+                name = info.name;
             }
         });
 
@@ -115,7 +117,8 @@ router.post("/", function(req, res, next){
                     SpecificContent: {
                         employeeNumber: employeeNumber,
                         address: addressChange,
-                        originalAddress: originalAddress
+                        originalAddress: originalAddress,
+                        name: name
                     }
                 }
             };
