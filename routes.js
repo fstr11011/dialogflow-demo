@@ -188,7 +188,7 @@ router.post("/", function(req, res, next){
         newEmployee.save(function(err, user){
             if(err) return next(err);
 
-            var firstName = req.body.queryResult.parameters.firstNam;
+            var firstName = req.body.queryResult.parameters.firstName;
             var lastName = req.body.queryResult.parameters.lastName;
             var PIN = req.body.queryResult.parameters.employeePIN;
             var employeeNumber = req.body.queryResult.parameters.employeeNumber;
