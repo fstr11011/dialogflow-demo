@@ -19,8 +19,7 @@ var mongoose = require("mongoose");
 mongoose.connect(config.dbUrl);
 
 var db = mongoose.connection;
-request.get('https://api.api.ai/v2/query?v=20150910&e=custom_start&timezone=America/New_York&lang=en&sessionId=1234567890').auth(null, null, true, '96fa0fd9218c4416ba6ccb7c86de38da');
-console.log('passed request get');
+
 db.on("error", function(err){
     console.error("DB connection error:", err);
 });
@@ -39,7 +38,8 @@ app.use(function(req, res, next){
     next();
 });
 
-
+request.get('https://api.api.ai/v2/query?v=20150910&e=custom_start&timezone=America/New_York&lang=en&sessionId=1234567890').auth(null, null, true, '96fa0fd9218c4416ba6ccb7c86de38da');
+console.log('passed request get');
 
 app.use("/", routes);
 
