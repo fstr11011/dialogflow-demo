@@ -174,6 +174,24 @@ router.post("/", function(req, res, next){
             });
         });
     }
+
+    if(req.body.queryResult.action === "newemployee" && req.body.queryResult.parameters.employeeAddress !== "" && req.body.queryResult.parameters.lastName !== "" && req.body.queryResult.parameters.employeeNumber !== "" && req.body.queryResult.parameters.employeePIN !== "" && req.body.queryResult.parameters.firstName !== ""){
+        var employeeInfo = {
+            "employeeNumber": req.body.queryResult.parameters.employeeNumber,
+            "firstName": req.body.queryResult.parameters.firstName,
+            "lastName": req.body.queryResult.parameters.lastName,
+            "PIN": req.body.queryResult.parameters.employeePIN,
+            "address": req.body.queryResult.parameters.employeeAddress
+        };
+        var newEmployee = new UserInfo(employeeInfo);
+        newEmployee.save(function(err, user){
+            if(err) return next(err);
+            res.status(201);
+            res.json({
+                "fulfillmentText": "A new account for " + req.body.queryResult.parameters.firstName + " has been created."
+            });
+        });
+    }
     
 });
 
