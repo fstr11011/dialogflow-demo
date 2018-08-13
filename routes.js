@@ -206,7 +206,7 @@ router.post("/", function(req, res, next){
                 var postDataQueue = {
                     itemData: {
                         Priority: "Normal",
-                        Reference: addressChange,
+                        Reference: firstName,
                         Name: "NewEmployee",
                         SpecificContent: {
                             firstName: firstName,
@@ -239,7 +239,7 @@ router.post("/", function(req, res, next){
                         });
                     }
                 });
-                
+
             });
 
         });
