@@ -30,12 +30,7 @@ router.get("/", function(req, res, next){
             .sort({employeeNumber: 1})
             .exec(function(err, info){
                 if(err) return next(err);
-                res.json({
-                    "followupEventInput": {
-                        "name": "custom_start",
-                        "languageCode": "en-US"
-                    }
-                });
+                res.json(info);
             });
 });
 
