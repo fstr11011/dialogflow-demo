@@ -47,7 +47,7 @@ router.post("/", function(req, res, next){
                             "followupEventInput": {
                                 "name": "custom_hello",
                                 "parameters": {
-                                    "name": info.name
+                                    "name": info.firstName
                                 },
                                 "languageCode": "en-US"
                               }
