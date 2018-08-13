@@ -183,13 +183,65 @@ router.post("/", function(req, res, next){
             "PIN": req.body.queryResult.parameters.employeePIN,
             "address": req.body.queryResult.parameters.employeeAddress
         };
+
         var newEmployee = new UserInfo(employeeInfo);
         newEmployee.save(function(err, user){
             if(err) return next(err);
-            res.status(201);
-            res.json({
-                "fulfillmentText": "A new account for " + req.body.queryResult.parameters.firstName + " has been created."
+
+            var firstName = req.body.queryResult.parameters.firstNam;
+            var lastName = req.body.queryResult.parameters.lastName;
+            var PIN = req.body.queryResult.parameters.employeePIN;
+            var employeeNumber = req.body.queryResult.parameters.employeeNumber;
+            var address = req.body.queryResult.parameters.employeeAddress;
+
+            request(authOptions, function(err, response, body){
+                if(err){
+                    console.error('error posting json: ', err);
+                    throw err;
+                }
+                console.log(JSON.stringify(body));
+    
+                var queueURL = config.queueUrl;
+                
+                var postDataQueue = {
+                    itemData: {
+                        Priority: "Normal",
+                        Reference: addressChange,
+                        Name: "NewEmployee",
+                        SpecificContent: {
+                            firstName: firstName,
+                            lastName: lastName,
+                            PIN: PIN,
+                            employeeNumber: employeeNumber,
+                            address: address
+                        }
+                    }
+                };
+    
+                var queueOptions = {
+                    method: "post",
+                    body: postDataQueue,
+                    auth: { bearer: body.result},
+                    json: true,
+                    url: queueURL
+                };
+    
+                request(queueOptions, function(err, response, body){
+                    if(err){
+                        console.error('error parsing json: ', err);
+                        throw err;
+                        res.sendStatus(500);
+                    } else{
+                        console.log(JSON.stringify(body));
+                        console.log("Operation succesfully completed");
+                        res.json({
+                            "fulfillmentText": "A new account for " + req.body.queryResult.parameters.firstName + " has been created."
+                        });
+                    }
+                });
+                
             });
+
         });
     }
     
