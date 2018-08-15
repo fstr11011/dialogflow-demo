@@ -235,13 +235,7 @@ router.post("/", function(req, res, next){
                         console.log(JSON.stringify(body));
                         console.log("Operation succesfully completed");
                         res.json({
-                            "followupEventInput": {
-                                "name": "new_employee_end ",
-                                "parameters": {
-                                    "name":firstName
-                                },
-                                "languageCode": "en-US"
-                            }
+                            
                         });
                     }
                 });
