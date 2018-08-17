@@ -38,9 +38,6 @@ app.use(function(req, res, next){
     next();
 });
 
-request.get('https://api.api.ai/v2/query?v=20150910&e=custom_start&timezone=America/New_York&lang=en&sessionId=1234567890').auth(null, null, true, '96fa0fd9218c4416ba6ccb7c86de38da');
-console.log('passed request get');
-
 app.use("/", routes);
 
 app.use(function(req, res, next){
