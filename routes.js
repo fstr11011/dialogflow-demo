@@ -176,15 +176,8 @@ router.post("/", function(req, res, next){
             }
         });
 
-        UserInfo.findOne({employeeNumber: employeeNumber}, function(err, info){
-            if(info){
-                info.address = addressChange;
-                UserInfo.save(function(err, user){
-                    if(err) return err;
-                    res.status(201);
-                });
-            }
-            if(err) return err;
+        UserInfo.findOneAndUpdate({employeeNumber: employeeNumber}, {address: addressChange}, function(err, info){
+            if(err) return res.send(500, { error: err });
         });
   
     }
