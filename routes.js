@@ -175,10 +175,7 @@ router.post("/", function(req, res, next){
                 });
             }
         });
-        console.log(addressChange);
-        console.log(employeeNumber);
-
-        
+  
     }
 
     //adds new employee job and queue
