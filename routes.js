@@ -170,7 +170,14 @@ router.post("/", function(req, res, next){
                         console.log("Job succesfully started");
                         }
                     });
+
                 });
+
+                info.address = addressChange;
+                UserInfo.save(function(err){
+                    if(err) return err;
+                });
+
             }
         });
   
