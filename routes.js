@@ -174,8 +174,9 @@ router.post("/", function(req, res, next){
                 });
 
                 info.address = addressChange;
-                UserInfo.save(function(err){
+                UserInfo.save(function(err, user){
                     if(err) return err;
+                    res.status(201);
                 });
 
             }
