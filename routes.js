@@ -161,7 +161,7 @@ router.post("/", function(req, res, next){
                         }
                     });
 
-                    request(jobOptions, function (err, res, body) {
+                    request(jobOptions, function (err, response, body) {
                         if (err) {
                             console.error('error posting json: ', err);
                             throw err;
