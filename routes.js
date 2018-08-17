@@ -97,12 +97,12 @@ router.post("/", function(req, res, next){
             if(info){
                 originalAddress = info.address;
                 name = info.firstName;
+                console.log(originalAddress);
+                console.log(name);
             }
         });
         console.log(addressChange);
         console.log(employeeNumber);
-        console.log(originalAddress);
-        console.log(name);
 
         request(authOptions, function(err, response, body){
             if(err){
