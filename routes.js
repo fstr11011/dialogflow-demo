@@ -100,6 +100,9 @@ router.post("/", function(req, res, next){
             }
         });
 
+        console.log(originalAddress);
+        console.log(name);
+
         request(authOptions, function(err, response, body){
             if(err){
                 console.error('error posting json: ', err);
