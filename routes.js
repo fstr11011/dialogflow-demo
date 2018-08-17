@@ -94,7 +94,7 @@ router.post("/", function(req, res, next){
             if(err) return err;
             if(info){
                 var originalAddress = info.address;
-                var name = info.firstName;
+                var name = info.firstName + " " + info.lastName;
                 console.log(originalAddress);
                 console.log(name);
 
