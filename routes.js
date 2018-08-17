@@ -169,12 +169,13 @@ router.post("/", function(req, res, next){
                     console.error('error posting json: ', err);
                     throw err
                 } else {
-                   console.log("Job succesfully started")
+                   console.log("Job succesfully started");
                 }
             });
         });
     }
 
+    //adds new employee job and queue
     if(req.body.queryResult.action === "newemployee"){
         var employeeInfo = {
             "employeeNumber": req.body.queryResult.outputContexts[0].parameters["empID.original"],
@@ -231,6 +232,25 @@ router.post("/", function(req, res, next){
                     json: true,
                     url: queueURL
                 };
+
+                var jobURL = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
+
+                var jobData = {
+                    startInfo: {
+                        ReleaseKey: "4c08f67e-184a-4f5f-bbe1-8e5d77a2ea92",
+                        Strategy: "All",
+                        RobotIds: [],
+                        NoOfRobots: 0
+                    }
+                };
+
+                var jobOptions = {
+                    method: "post",
+                    body: jobData,
+                    auth: { bearer: body.result},
+                    json: true,
+                    url: jobURL
+                };
     
                 request(queueOptions, function(err, response, body){
                     if(err){
@@ -241,8 +261,17 @@ router.post("/", function(req, res, next){
                         console.log(JSON.stringify(body));
                         console.log("Operation succesfully completed");
                         res.json({
-                            
+                            "fulfillmentText": firstName + lastName + " has been added to the database."
                         });
+                    }
+                });
+
+                request(jobOptions, function (err, res, body) {
+                    if (err) {
+                        console.error('error posting json: ', err);
+                        throw err
+                    } else {
+                       console.log("Job succesfully started");
                     }
                 });
 
