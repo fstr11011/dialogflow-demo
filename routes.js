@@ -99,84 +99,86 @@ router.post("/", function(req, res, next){
                 name = info.firstName;
                 console.log(originalAddress);
                 console.log(name);
+
+                request(authOptions, function(err, response, body){
+                    if(err){
+                        console.error('error posting json: ', err);
+                        throw err;
+                    }
+                    console.log(JSON.stringify(body));
+
+                    var queueURL = config.queueUrl;
+                    
+                    var postDataQueue = {
+                        itemData: {
+                            Priority: "Normal",
+                            Reference: addressChange,
+                            Name: "ApiQueue",
+                            SpecificContent: {
+                                employeeNumber: employeeNumber,
+                                address: addressChange,
+                                originalAddress: originalAddress,
+                                name: name
+                            }
+                        }
+                    };
+
+                    var queueOptions = {
+                        method: "post",
+                        body: postDataQueue,
+                        auth: { bearer: body.result},
+                        json: true,
+                        url: queueURL
+                    };
+
+                    var jobURL = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
+
+                    var jobData = {
+                        startInfo: {
+                            ReleaseKey: "36ba6a22-0248-458a-943a-8f54ae31966c",
+                            Strategy: "All",
+                            RobotIds: [],
+                            NoOfRobots: 0
+                        }
+                    };
+
+                    var jobOptions = {
+                        method: "post",
+                        body: jobData,
+                        auth: { bearer: body.result},
+                        json: true,
+                        url: jobURL
+                    };
+
+                    request(queueOptions, function(err, response, body){
+                        if(err){
+                            console.error('error parsing json: ', err);
+                            throw err;
+                            res.sendStatus(500);
+                        } else{
+                            console.log(JSON.stringify(body));
+                            console.log("Operation succesfully completed");
+                            res.json({
+                                "fulfillmentText": "Thank you! Your request is being processed and you should receive a confirmation email in the next 5 minutes.  Enjoy the rest of your day!"
+                            });
+                        }
+                    });
+
+                    request(jobOptions, function (err, res, body) {
+                        if (err) {
+                            console.error('error posting json: ', err);
+                            throw err
+                        } else {
+                        console.log("Job succesfully started");
+                        }
+                    });
+                });
             }
         });
         console.log(addressChange);
         console.log(employeeNumber);
 
-        request(authOptions, function(err, response, body){
-            if(err){
-                console.error('error posting json: ', err);
-                throw err;
-            }
-            console.log(JSON.stringify(body));
-
-            var queueURL = config.queueUrl;
-            
-            var postDataQueue = {
-                itemData: {
-                    Priority: "Normal",
-                    Reference: addressChange,
-                    Name: "ApiQueue",
-                    SpecificContent: {
-                        employeeNumber: employeeNumber,
-                        address: addressChange,
-                        originalAddress: originalAddress,
-                        name: name
-                    }
-                }
-            };
-
-            var queueOptions = {
-                method: "post",
-                body: postDataQueue,
-                auth: { bearer: body.result},
-                json: true,
-                url: queueURL
-            };
-
-            var jobURL = "https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs";
-
-            var jobData = {
-                startInfo: {
-                    ReleaseKey: "36ba6a22-0248-458a-943a-8f54ae31966c",
-                    Strategy: "All",
-                    RobotIds: [],
-                    NoOfRobots: 0
-                }
-            };
-
-            var jobOptions = {
-                method: "post",
-                body: jobData,
-                auth: { bearer: body.result},
-                json: true,
-                url: jobURL
-            };
-
-            request(queueOptions, function(err, response, body){
-                if(err){
-                    console.error('error parsing json: ', err);
-                    throw err;
-                    res.sendStatus(500);
-                } else{
-                    console.log(JSON.stringify(body));
-                    console.log("Operation succesfully completed");
-                    res.json({
-                        "fulfillmentText": "Thank you! Your request is being processed and you should receive a confirmation email in the next 5 minutes.  Enjoy the rest of your day!"
-                    });
-                }
-            });
-
-            request(jobOptions, function (err, res, body) {
-                if (err) {
-                    console.error('error posting json: ', err);
-                    throw err
-                } else {
-                   console.log("Job succesfully started");
-                }
-            });
-        });
+        
     }
 
     //adds new employee job and queue
