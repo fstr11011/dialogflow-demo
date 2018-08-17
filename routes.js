@@ -87,7 +87,7 @@ router.post("/", function(req, res, next){
     if(req.body.queryResult.action === "addQueue"){
     
         var addressChange = req.body.queryResult.parameters.newAddress;
-        var employeeNumber = req.body.queryResult.outputContexts[0].parameters.employeeNumber;
+        var employeeNumber = req.body.queryResult.outputContexts[0].parameters["employeeNumber.original"];
         var originalAddress;
         var name;
 
