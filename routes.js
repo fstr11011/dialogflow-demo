@@ -194,11 +194,11 @@ router.post("/", function(req, res, next){
         newEmployee.save(function(err, user){
             if(err) return next(err);
 
-            var firstName = req.body.queryResult.parameters.firstName;
-            var lastName = req.body.queryResult.parameters.lastName;
-            var PIN = req.body.queryResult.parameters.employeePIN;
-            var employeeNumber = req.body.queryResult.parameters.employeeNumber;
-            var address = req.body.queryResult.parameters.employeeAddress;
+            var firstName = req.body.queryResult.outputContexts[0].parameters.firstName;
+            var lastName = req.body.queryResult.outputContexts[0].parameters.lastName;
+            var PIN = req.body.queryResult.outputContexts[0].parameters["PIN.original"];
+            var employeeNumber = rreq.body.queryResult.outputContexts[0].parameters["empID.original"];
+            var address = req.body.queryResult.outputContexts[0].parameters.address;
 
             request(authOptions, function(err, response, body){
                 if(err){
