@@ -96,7 +96,7 @@ router.post("/", function(req, res, next){
             if(err) return err;
             if(info){
                 originalAddress = info.address;
-                name = info.name;
+                name = info.firstName;
             }
         });
 
