@@ -176,14 +176,16 @@ router.post("/", function(req, res, next){
             }
         });
 
-        //UserInfo.findOne({employeeNumber: employeeNumber})
-        //.exec(function(err, info){
-        //    info.address = addressChange;
-        //        UserInfo.save(function(err, user){
-        //            if(err) return err;
-        //            res.status(201);
-        //        });
-        //});
+        UserInfo.findOne({employeeNumber: employeeNumber}, function(err, info){
+            if(info){
+                info.address = addressChange;
+                UserInfo.save(function(err, user){
+                    if(err) return err;
+                    res.status(201);
+                });
+            }
+            if(err) return err;
+        });
   
     }
 
