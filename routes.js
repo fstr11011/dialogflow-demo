@@ -173,13 +173,16 @@ router.post("/", function(req, res, next){
 
                 });
 
-                info.address = addressChange;
+            }
+        });
+
+        UserInfo.findOne({employeeNumber: employeeNumber})
+        .exec(function(err, info){
+            info.address = addressChange;
                 UserInfo.save(function(err, user){
                     if(err) return err;
                     res.status(201);
                 });
-
-            }
         });
   
     }
