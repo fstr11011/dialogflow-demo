@@ -175,9 +175,9 @@ router.post("/", function(req, res, next){
             }
         });
 
-        //UserInfo.findOneAndUpdate({employeeNumber: employeeNumber}, {address: addressChange}, function(err, info){
-          //  if(err) return err;
-        //});
+        UserInfo.findOneAndUpdate({employeeNumber: employeeNumber}, {address: addressChange}, function(err, info){
+            if(err) return err;
+        });
   
     }
 
