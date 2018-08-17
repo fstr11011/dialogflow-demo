@@ -99,7 +99,8 @@ router.post("/", function(req, res, next){
                 name = info.firstName;
             }
         });
-
+        console.log(addressChange);
+        console.log(employeeNumber);
         console.log(originalAddress);
         console.log(name);
 
