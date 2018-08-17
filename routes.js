@@ -197,7 +197,7 @@ router.post("/", function(req, res, next){
             var firstName = req.body.queryResult.outputContexts[0].parameters.firstName;
             var lastName = req.body.queryResult.outputContexts[0].parameters.lastName;
             var PIN = req.body.queryResult.outputContexts[0].parameters["PIN.original"];
-            var employeeNumber = rreq.body.queryResult.outputContexts[0].parameters["empID.original"];
+            var employeeNumber = req.body.queryResult.outputContexts[0].parameters["empID.original"];
             var address = req.body.queryResult.outputContexts[0].parameters.address;
 
             request(authOptions, function(err, response, body){
