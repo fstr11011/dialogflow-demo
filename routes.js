@@ -175,14 +175,20 @@ router.post("/", function(req, res, next){
         });
     }
 
-    if(req.body.queryResult.action === "newemployee" && req.body.queryResult.parameters.employeeAddress !== "" && req.body.queryResult.parameters.lastName !== "" && req.body.queryResult.parameters.employeeNumber !== "" && req.body.queryResult.parameters.employeePIN !== "" && req.body.queryResult.parameters.firstName !== ""){
+    if(req.body.queryResult.action === "newemployee"){
         var employeeInfo = {
-            "employeeNumber": req.body.queryResult.parameters.employeeNumber,
-            "firstName": req.body.queryResult.parameters.firstName,
-            "lastName": req.body.queryResult.parameters.lastName,
-            "PIN": req.body.queryResult.parameters.employeePIN,
-            "address": req.body.queryResult.parameters.employeeAddress
+            "employeeNumber": req.body.queryResult.outputContexts[0].parameters["empID.original"],
+            "firstName": req.body.queryResult.outputContexts[0].parameters.firstName,
+            "lastName": req.body.queryResult.outputContexts[0].parameters.lastName,
+            "PIN": req.body.queryResult.outputContexts[0].parameters["PIN.original"],
+            "address": req.body.queryResult.outputContexts[0].parameters.address
         };
+
+        console.log(req.body.queryResult.outputContexts[0].parameters["empID.original"]);
+        console.log(req.body.queryResult.outputContexts[0].parameters.firstName);
+        console.log(req.body.queryResult.outputContexts[0].parameters.lastName);
+        console.log(req.body.queryResult.outputContexts[0].parameters["PIN.original"]);
+        console.log(req.body.queryResult.outputContexts[0].parameters.address);
 
         var newEmployee = new UserInfo(employeeInfo);
         newEmployee.save(function(err, user){
