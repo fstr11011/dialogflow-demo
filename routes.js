@@ -151,7 +151,6 @@ router.post("/", function(req, res, next){
                     request(queueOptions, function(err, response, body){
                         if(err){
                             console.error('error parsing json: ', err);
-                            res.sendStatus(500);
                             throw err;
                         } else{
                             console.log(JSON.stringify(body));
