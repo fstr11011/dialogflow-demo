@@ -175,12 +175,10 @@ router.post("/", function(req, res, next){
             }
         });
 
-        UserInfo.findOne({employeeNumber: employeeNumber})
-        .exec(function(err, info){
-            info.address = addressChange;
-            UserInfo.save(function(err){
-                if(err) return err;
-            });
+        UserInfo.update({employeeNumber: employeeNumber}, {
+            address: addressChange
+        }, function(err, affected, resp) {
+           console.log(resp);
         });
   
     }
